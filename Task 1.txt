@@ -1,0 +1,31 @@
+#Выборки пользователей, у которых количество постов больше, чем у пользователя их пригласившего.
+select u1.name
+from stat4market.users u1
+join stat4market.users u2 on u2.id = u1.invited_by_user_id
+where u1.posts_qty > u2.posts_qty;
+
+#Выборки пользователей, имеющих максимальное количество постов в своей группе.
+select name, posts_qty, group_id
+from stat4market.users
+where posts_qty in (select MAX(posts_qty)
+                    from stat4market.users
+                    group by group_id);
+
+#Выборки групп, количество пользователей в которых превышает 10000.
+select gr.name name_group, count(*) amount from `groups` gr
+join users u on gr.id = u.group_id
+group by u.group_id
+HAVING count(*) > 10000;
+
+#Выборки пользователей, у которых пригласивший их пользователь из другой группы.
+select u1.name, u1.group_id our_group, u2.group_id invite_group
+from stat4market.users u1
+join stat4market.users u2 on u2.id = u1.invited_by_user_id
+where u1.group_id != u2.group_id;
+
+
+#Выборки групп с максимальным количеством постов у пользователей.
+select  gr.name, u.name, u.posts_qty from `groups` gr
+join users u on gr.id = u.group_id
+                where u.posts_qty in (select max(posts_qty) from stat4market.users)
+                group by gr.name, u.name, u.posts_qty;

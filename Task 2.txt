@@ -1,0 +1,14 @@
+# Запрос для добавления трех полей
+alter table task_2
+add address VARCHAR(50) NULL,
+add country VARCHAR(50) NULL,
+add tag     VARCHAR(50) NULL;
+
+# Изменения имени одного поля
+alter table task_2
+    change address position varchar(70) null;
+
+# Добавления двух индексов в базу данных размером свыше 100 ГБ и более 8 миллионов строк
+CREATE INDEX index1 ON schema1.table1 (column1);
+CREATE INDEX index2 ON schema1.table2 (column2);
+# Не уверен в точном решении этой задачи, мне бы потребовалось больше времени для разбора.
